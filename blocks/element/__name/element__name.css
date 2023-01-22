@@ -9,3 +9,9 @@
     overflow: hidden;
     max-width: 210px;
   }
+
+  @media screen and (max-width: 540px) {
+    .element__name {
+        max-width: 160px;
+    }
+  }
