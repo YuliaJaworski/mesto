@@ -8,84 +8,86 @@
 </head>
 <body>
   <div class="page">
-    <header class="header">
-      <img src="./images/logo.svg" alt="логотип 'Место'" class="header__logo">
-    </header>
-    <main class="main">
-      <section class="profile">
-        <div class="profile__main">
-          <img src="./images/avatar.png" alt="аватар профиля" class="profile__avatar">
-          <div class="profile__info">
-            <div class="profile__edit">
-              <h1 class="profile__name">Жак-Ив Кусто</h1>
-              <button type="button" class="profile__edit-button"></button>
+    <div class="page__full-screen">
+      <header class="header">
+        <img src="./images/logo.svg" alt="логотип 'Место'" class="header__logo">
+      </header>
+      <main class="main">
+        <section class="profile">
+          <div class="profile__main">
+            <img src="./images/avatar.png" alt="аватар профиля" class="profile__avatar">
+            <div class="profile__info">
+              <div class="profile__edit">
+                <h1 class="profile__name">Жак-Ив Кусто</h1>
+                <button type="button" class="profile__edit-button"></button>
+              </div>
+              <p class="profile__job">Исследователь океана</p>
             </div>
-            <p class="profile__job">Исследователь океана</p>
           </div>
+          <button type="button" class="profile__add-button"></button>
+        </section>
+        <section class="elements">
+          <ul class="elements__grid">
+            <li class="element">
+              <img class="element__photo" src="./images/karachaevsk.png" alt="фото в профиле">
+              <div class="element__description">
+                <h2 class="element__name">Карачаевск</h2>
+                <button type="button" class="element__like element__like_active"></button>
+              </div>
+            </li>
+            <li class="element">
+              <img class="element__photo" src="./images/Elbrus.png" alt="фото в профиле">
+              <div class="element__description">
+                <h2 class="element__name">Эльбрус</h2>
+                <button type="button" class="element__like element__like_active"></button>
+              </div>
+            </li>
+            <li class="element">
+              <img class="element__photo" src="./images/dombaii.png" alt="фото в профиле">
+              <div class="element__description">
+                <h2 class="element__name">Домбай</h2>
+                <button type="button" class="element__like element__like_active"></button>
+              </div>
+            </li>
+            <li class="element">
+              <img class="element__photo" src="./images/Alps.jpg" alt="фото в профиле">
+              <div class="element__description">
+                <h2 class="element__name">Альпы</h2>
+                <button type="button" class="element__like element__like_active"></button>
+              </div>
+            </li>
+            <li class="element">
+              <img class="element__photo" src="./images/Portugal.jpg" alt="фото в профиле">
+              <div class="element__description">
+                <h2 class="element__name">Португалия</h2>
+                <button type="button" class="element__like element__like_active"></button>
+              </div>
+            </li>
+            <li class="element">
+              <img class="element__photo" src="./images/Swltzerland.jpg" alt="фото в профиле">
+              <div class="element__description">
+                <h2 class="element__name">Швейцария</h2>
+                <button type="button" class="element__like element__like_active"></button>
+              </div>
+            </li>
+          </ul>
+        </section>
+      </main>
+      <footer class="footer">
+        <h2 class="footer__copyright">&#64;2020 Mesto Russia</h2>
+      </footer>
+      <section class="popup">
+        <div class="popup__container">
+          <button type="button" class="popup__close"></button>
+          <h2 class="popup__heading">Редактировать профиль</h2>
+          <form name="popup__form" action="URL" method="post" id="popup__form" class="popup__form">
+            <input type="text" class="popup__element popup__element_field_name" name="name" value="Жак-Ив Кусто">
+            <input type="text" class="popup__element popup__element_field_job" name="job" value="Исследователь океана">
+            <button type="submit" class="popup__save">Сохранить</button>
+          </form>
         </div>
-        <button type="button" class="profile__add-button"></button>
       </section>
-      <section class="elements">
-        <ul class="elements__grid">
-          <li class="element">
-            <img class="element__photo" src="./images/karachaevsk.png" alt="фото в профиле">
-            <div class="element__description">
-              <h2 class="element__name">Карачаевск</h2>
-              <button type="button" class="element__like element__like_active"></button>
-            </div>
-          </li>
-          <li class="element">
-            <img class="element__photo" src="./images/Elbrus.png" alt="фото в профиле">
-            <div class="element__description">
-              <h2 class="element__name">Эльбрус</h2>
-              <button type="button" class="element__like element__like_active"></button>
-            </div>
-          </li>
-          <li class="element">
-            <img class="element__photo" src="./images/dombaii.png" alt="фото в профиле">
-            <div class="element__description">
-              <h2 class="element__name">Домбай</h2>
-              <button type="button" class="element__like element__like_active"></button>
-            </div>
-          </li>
-          <li class="element">
-            <img class="element__photo" src="./images/Alps.jpg" alt="фото в профиле">
-            <div class="element__description">
-              <h2 class="element__name">Альпы</h2>
-              <button type="button" class="element__like element__like_active"></button>
-            </div>
-          </li>
-          <li class="element">
-            <img class="element__photo" src="./images/Portugal.jpg" alt="фото в профиле">
-            <div class="element__description">
-              <h2 class="element__name">Португалия</h2>
-              <button type="button" class="element__like element__like_active"></button>
-            </div>
-          </li>
-          <li class="element">
-            <img class="element__photo" src="./images/Swltzerland.jpg" alt="фото в профиле">
-            <div class="element__description">
-              <h2 class="element__name">Швейцария</h2>
-              <button type="button" class="element__like element__like_active"></button>
-            </div>
-          </li>
-        </ul>
-      </section>
-    </main>
-    <footer class="footer">
-      <h2 class="footer__copyright">&#64;2020 Mesto Russia</h2>
-    </footer>
-    <section class="popup">
-      <div class="popup__container">
-        <button type="button" class="popup__close"></button>
-        <h2 class="popup__heading">Редактировать профиль</h2>
-        <form action="URL" method="post" id="popup__form" class="popup__form">
-          <input type="text" class="popup__element popup__element_name" name="name" value="Жак-Ив Кусто">
-          <input type="text" class="popup__element popup__element_job" name="job" value="Исследователь океана">
-          <button type="submit" class="popup__save">Сохранить</button>
-        </form>
-      </div>
-    </section>
+    </div>
   </div>
   <script src="./scripts/index.js"></script>
 </body>
