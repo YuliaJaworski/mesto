@@ -8,6 +8,7 @@ let formElement = document.querySelector('.popup__form');
 let nameInput = formElement.querySelector('.popup__element_field_name');
 let jobInput = formElement.querySelector('.popup__element_field_job');
 
+
 const openPopup = function() {
     popupElement.classList.add('popup_opened');
 
