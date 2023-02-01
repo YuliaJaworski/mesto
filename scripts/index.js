@@ -98,6 +98,13 @@ const createElement = (card) => {
   const element = document.createElement('li');
   element.classList.add('element');
 
+  const deleteBtn = document.createElement('button');
+  deleteBtn.classList.add('element__delete');
+
+  deleteBtn.addEventListener('click', () => {
+    element.remove();
+  })
+
   const elementPhoto = document.createElement('img');
   elementPhoto.classList.add('element__photo');
   elementPhoto.src = card.link;
@@ -112,9 +119,14 @@ const createElement = (card) => {
   const elementLike = document.createElement('button');
   elementLike.classList.add('element__like');
 
+  elementLike.addEventListener('click', () => {
+    elementLike.classList.toggle('element__like_active');
+    elementLike.classList.toggle('element__like');
+  });
+
   elementDescription.append(elementName, elementLike);
 
-  element.append(elementPhoto, elementDescription);
+  element.append(elementPhoto, elementDescription, deleteBtn);
 
   return element;
 };
