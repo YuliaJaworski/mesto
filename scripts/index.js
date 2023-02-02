@@ -36,7 +36,7 @@ function handleFormSubmit (evt) {
 
 formElementEdit.addEventListener('submit', handleFormSubmit);
 
-// открытие и закрытие popup для добавления фото
+// переменные для добавления фото
 const popupElementAdd = document.querySelector('.popup__add');
 const popupCloseElementAdd = popupElementAdd.querySelector('.popup__close_button_add');
 const popupOpenElementAdd = document.querySelector('.profile__add-button');
@@ -44,11 +44,15 @@ const formElementAdd = popupElementAdd.querySelector('.popup__form_add');
 const titleInput = formElementAdd.querySelector('.popup__element_field_title');
 const linkInput = formElementAdd.querySelector('.popup__element_field_link');
 
-const openPopupAdd = function() {
-    popupElementAdd.classList.add('popup_opened');
+//открытие popup
+const openPopup = function(popup) {
+    popup.classList.add('popup_opened');
 }
 
-popupOpenElementAdd.addEventListener('click', openPopupAdd);
+//создание блока для добавления фото
+popupOpenElementAdd.addEventListener('click', function() {
+    openPopup(popupElementAdd);
+});
 popupCloseElementAdd.addEventListener('click', function() {
     closePopup(popupElementAdd);
 });
@@ -63,6 +67,18 @@ const addFormSumbmit = (evt) => {
 };
 
 formElementAdd.addEventListener('submit', addFormSumbmit);
+
+//переменные для просмотра фото
+
+const popupElementPhoto = document.querySelector('.popup__open-photo');
+const popupPhoto = popupElementPhoto.querySelector('.popup__photo');
+const popupCloseElementPhoto = popupElementPhoto.querySelector('.popup__close_button_photo');
+const popupTitle = popupElementPhoto.querySelector('.popup__title');
+
+//закрытие popup для просмотра фото
+popupCloseElementPhoto.addEventListener('click', () => {
+    closePopup(popupElementPhoto);
+})
 
 const initialCards = [
     {
@@ -91,16 +107,19 @@ const initialCards = [
     }
   ];
 
+//переменные для создания массива
 const elementTemplate = document.querySelector('#element__template');
 const elementsList = document.querySelector('.elements__grid');
 
+// создание элементов массива
 const createElement = (card) => {
   const element = document.createElement('li');
   element.classList.add('element');
 
   const deleteBtn = document.createElement('button');
   deleteBtn.classList.add('element__delete');
-
+  
+  //удалить фото
   deleteBtn.addEventListener('click', () => {
     element.remove();
   })
@@ -108,6 +127,16 @@ const createElement = (card) => {
   const elementPhoto = document.createElement('img');
   elementPhoto.classList.add('element__photo');
   elementPhoto.src = card.link;
+
+  //открытие popup для просмотра фото
+  elementPhoto.addEventListener('click', (evt) => {
+    evt.preventDefault();
+
+    popupPhoto.src = elementPhoto.src;
+    popupTitle.textContent = elementName.textContent;
+
+    openPopup(popupElementPhoto);
+  })
 
   const elementDescription = document.createElement('div');
   elementDescription.classList.add('element__description');
@@ -119,13 +148,13 @@ const createElement = (card) => {
   const elementLike = document.createElement('button');
   elementLike.classList.add('element__like');
 
+  //поставить лайк
   elementLike.addEventListener('click', () => {
     elementLike.classList.toggle('element__like_active');
     elementLike.classList.toggle('element__like');
   });
 
   elementDescription.append(elementName, elementLike);
-
   element.append(elementPhoto, elementDescription, deleteBtn);
 
   return element;
