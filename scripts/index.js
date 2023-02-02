@@ -1,5 +1,5 @@
 console.log('Привет, мир!');
-const popupElementEdit = document.querySelector('.popup__window_edit');
+const popupElementEdit = document.querySelector('.popup_edit');
 const popupCloseElementEdit = popupElementEdit.querySelector('.popup__close_button_edit');
 const popupOpenElementEdit = document.querySelector('.profile__edit-button');
 let profileName = document.querySelector('.profile__name');
@@ -37,7 +37,7 @@ function handleFormSubmit (evt) {
 formElementEdit.addEventListener('submit', handleFormSubmit);
 
 // переменные для добавления фото
-const popupElementAdd = document.querySelector('.popup__window_add');
+const popupElementAdd = document.querySelector('.popup_add');
 const popupCloseElementAdd = popupElementAdd.querySelector('.popup__close_button_add');
 const popupOpenElementAdd = document.querySelector('.profile__add-button');
 const formElementAdd = popupElementAdd.querySelector('.popup__form_add');
@@ -70,7 +70,7 @@ formElementAdd.addEventListener('submit', addFormSumbmit);
 
 //переменные для просмотра фото
 
-const popupElementPhoto = document.querySelector('.popup__window_open-photo');
+const popupElementPhoto = document.querySelector('.popup_open-photo');
 const popupPhoto = popupElementPhoto.querySelector('.popup__photo');
 const popupCloseElementPhoto = popupElementPhoto.querySelector('.popup__close_button_photo');
 const popupTitle = popupElementPhoto.querySelector('.popup__title');
