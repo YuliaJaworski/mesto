@@ -1,31 +1,34 @@
-console.log('Привет, мир!');
 const popupElementEdit = document.querySelector('.popup_edit');
 const popupCloseElementEdit = popupElementEdit.querySelector('.popup__close_button_edit');
 const popupOpenElementEdit = document.querySelector('.profile__edit-button');
-let profileName = document.querySelector('.profile__name');
-let profileJob = document.querySelector('.profile__job');
-let formElementEdit = document.querySelector('.popup__form_edit');
-let nameInput = formElementEdit.querySelector('.popup__element_field_name');
-let jobInput = formElementEdit.querySelector('.popup__element_field_job');
+const profileName = document.querySelector('.profile__name');
+const profileJob = document.querySelector('.profile__job');
+const formElementEdit = document.querySelector('.popup__form_edit');
+const nameInput = formElementEdit.querySelector('.popup__element_field_name');
+const jobInput = formElementEdit.querySelector('.popup__element_field_job');
+
+//открытие popup
+const openPopup = function(popupElement) {
+    popupElement.classList.add('popup_opened');
+}
+
+//закрытие popup
+const closePopup = function(popupElement) {
+    popupElement.classList.remove('popup_opened');
+}
 
 // открытие и закрытие popup редактирование профиля
-const openPopupEdit = function() {
-    popupElementEdit.classList.add('popup_opened');
-
+popupOpenElementEdit.addEventListener('click', function() {
+    openPopup(popupElementEdit);
     nameInput.value = profileName.textContent;
     jobInput.value = profileJob.textContent;
-}
+});
 
-const closePopup = function(popup) {
-    popup.classList.remove('popup_opened');
-}
-
-popupOpenElementEdit.addEventListener('click', openPopupEdit);
 popupCloseElementEdit.addEventListener('click', function() {
     closePopup(popupElementEdit);
 });
 
-function handleFormSubmit (evt) {
+function handleProfileFormSubmit (evt) {
     evt.preventDefault();
 
     profileName.textContent = nameInput.value;
@@ -34,7 +37,7 @@ function handleFormSubmit (evt) {
     closePopup (popupElementEdit);
 }
 
-formElementEdit.addEventListener('submit', handleFormSubmit);
+formElementEdit.addEventListener('submit', handleProfileFormSubmit);
 
 // переменные для добавления фото
 const popupElementAdd = document.querySelector('.popup_add');
@@ -44,11 +47,6 @@ const formElementAdd = popupElementAdd.querySelector('.popup__form_add');
 const titleInput = formElementAdd.querySelector('.popup__element_field_title');
 const linkInput = formElementAdd.querySelector('.popup__element_field_link');
 
-//открытие popup
-const openPopup = function(popup) {
-    popup.classList.add('popup_opened');
-}
-
 //создание блока для добавления фото
 popupOpenElementAdd.addEventListener('click', function() {
     openPopup(popupElementAdd);
@@ -57,16 +55,16 @@ popupCloseElementAdd.addEventListener('click', function() {
     closePopup(popupElementAdd);
 });
 
-const addFormSumbmit = (evt) => {
+const handleCardFormSubmit = (evt) => {
     evt.preventDefault();
     const сard = {name: titleInput.value, link: linkInput.value};
-    renderElement(сard);
+    renderCard(сard);
     titleInput.value = '';
     linkInput.value = '';
     closePopup(popupElementAdd);
 };
 
-formElementAdd.addEventListener('submit', addFormSumbmit);
+formElementAdd.addEventListener('submit', handleCardFormSubmit);
 
 //переменные для просмотра фото
 
@@ -108,62 +106,52 @@ const initialCards = [
   ];
 
 //переменные для создания массива
-const elementTemplate = document.querySelector('#element__template');
-const elementsList = document.querySelector('.elements__grid');
+const cardTemplate = document.querySelector('#element__template');
+const cardsContainer = document.querySelector('.elements__grid');
 
 // создание элементов массива
-const createElement = (card) => {
-  const element = document.createElement('li');
-  element.classList.add('element');
+const createCard = (card) => {
+  const cardPicture = cardTemplate.content.querySelector('.element').cloneNode(true);
+  const deleteBtn = cardPicture.querySelector('.element__delete');
 
-  const deleteBtn = document.createElement('button');
-  deleteBtn.classList.add('element__delete');
+  const cardPhoto = cardPicture.querySelector('.element__photo');
+  cardPhoto.src = card.link;
+  cardPhoto.alt = card.name;
+
+  const cardName = cardPicture.querySelector('.element__name');
+  cardName.textContent = card.name;
+
+  const cardLike = cardPicture.querySelector('.element__like');
   
   //удалить фото
   deleteBtn.addEventListener('click', () => {
-    element.remove();
+    cardPicture.remove();
   })
 
-  const elementPhoto = document.createElement('img');
-  elementPhoto.classList.add('element__photo');
-  elementPhoto.src = card.link;
-
   //открытие popup для просмотра фото
-  elementPhoto.addEventListener('click', (evt) => {
+  cardPhoto.addEventListener('click', (evt) => {
     evt.preventDefault();
 
-    popupPhoto.src = elementPhoto.src;
-    popupTitle.textContent = elementName.textContent;
+    popupPhoto.src = cardPhoto.src;
+    popupPhoto.alt = cardName.textContent;
+    popupTitle.textContent = cardName.textContent;
 
     openPopup(popupElementPhoto);
   })
 
-  const elementDescription = document.createElement('div');
-  elementDescription.classList.add('element__description');
-
-  const elementName = document.createElement('h2');
-  elementName.classList.add('element__name');
-  elementName.textContent = card.name;
-
-  const elementLike = document.createElement('button');
-  elementLike.classList.add('element__like');
-
   //поставить лайк
-  elementLike.addEventListener('click', () => {
-    elementLike.classList.toggle('element__like_active');
-    elementLike.classList.toggle('element__like');
+  cardLike.addEventListener('click', () => {
+    cardLike.classList.toggle('element__like_active');
+    cardLike.classList.toggle('element__like');
   });
 
-  elementDescription.append(elementName, elementLike);
-  element.append(elementPhoto, elementDescription, deleteBtn);
-
-  return element;
+  return cardPicture;
 };
 
-const renderElement = (card) => {
-    elementsList.prepend(createElement(card));
+const renderCard = (card) => {
+    cardsContainer.prepend(createCard(card));
 };
 
 initialCards.forEach((item) => {
-    renderElement(item);
+    renderCard(item);
 });
