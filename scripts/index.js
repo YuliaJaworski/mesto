@@ -108,11 +108,14 @@ const initialCards = [
 //переменные для создания массива
 const cardTemplate = document.querySelector('#element__template');
 const cardsContainer = document.querySelector('.elements__grid');
+const cardContent = cardTemplate.content.querySelector('.element');
+ 
 
 // создание элементов массива
 const createCard = (card) => {
-  const cardPicture = cardTemplate.content.querySelector('.element').cloneNode(true);
-  const deleteBtn = cardPicture.querySelector('.element__delete');
+  const cardPicture = cardContent.cloneNode(true);
+
+  const btnDelete = cardPicture.querySelector('.element__delete');
 
   const cardPhoto = cardPicture.querySelector('.element__photo');
   cardPhoto.src = card.link;
@@ -124,7 +127,7 @@ const createCard = (card) => {
   const cardLike = cardPicture.querySelector('.element__like');
   
   //удалить фото
-  deleteBtn.addEventListener('click', () => {
+  btnDelete.addEventListener('click', () => {
     cardPicture.remove();
   })
 
