@@ -51,3 +51,4 @@
 @import url(../blocks/popup/_open-photo/popup_open-photo.css);
 @import url(../blocks/popup/__element/_field/popup__element_field_error.css);
 @import url(../blocks/popup/__span/popup__span.css);
+@import url(../blocks/popup/__save/_disabled/popup__save_disabled.css);

@@ -2,7 +2,7 @@ const validationConfig = {
     formSelector: '.popup__form',
     inputSelector: '.popup__element',
     submitButtonSelector: '.popup__save',
-    inactiveButtonClass: 'popup__button_disabled',
+    inactiveButtonClass: 'popup__save_disabled',
     inputErrorClass: 'popup__element_field_error',
     errorClass: 'popup__error_visible'
   };
@@ -18,6 +18,11 @@ const validationConfig = {
         form.addEventListener('submit', disableSubmit);
 
         addInputListener(form, config);
+
+        form.addEventListener('input', () => {
+            toggleButtonState (form, config);
+        })
+        toggleButtonState (form, config);
     });
   }
 
@@ -33,6 +38,13 @@ function handleFormInput(event, config) {
         input.classList.add(config.inputErrorClass);
         errorMessage.textContent = input.validationMessage;
     }
+}
+
+function toggleButtonState (form, config) {
+    const buttonElement = form.querySelector(config.submitButtonSelector);
+    const formValid = form.checkValidity();
+    buttonElement.disabled = !formValid;
+    buttonElement.classList.toggle(config.inactiveButtonClass, !formValid);
 }
 
 function addInputListener(form, config) {
