@@ -17,6 +17,13 @@ const closePopup = function(popupElement) {
     popupElement.classList.remove('popup_opened');
 }
 
+//закрыть popup нажатием клавиши est
+function keyHandlerEst(evt, popupElement) {
+    if (evt.keyCode === 27) {
+        closePopup(popupElement);
+    }
+}
+
 // открытие и закрытие popup редактирование профиля
 popupOpenElementEdit.addEventListener('click', function() {
     openPopup(popupElementEdit);
@@ -27,6 +34,28 @@ popupOpenElementEdit.addEventListener('click', function() {
 popupCloseElementEdit.addEventListener('click', function() {
     closePopup(popupElementEdit);
 });
+
+//обработчик закрытия popup для редактирования аккаунта клавишей est
+document.addEventListener('keydown', (evt) => {
+    keyHandlerEst(evt, popupElementEdit);
+});
+
+//обработчик закрытия popup для добавления фото клавишей est
+document.addEventListener('keydown', (evt) => {
+    keyHandlerEst(evt, popupElementAdd);
+});
+
+//обработчик закрытия popup для просмотра фото клавишей est
+document.addEventListener('keydown', (evt) => {
+    keyHandlerEst(evt, popupElementPhoto);
+});
+
+//обработчик закрытия popup для редактирования аккаунта кликом на оверлей
+popupElementEdit.addEventListener('click', (evt) => {
+    if (evt.target === popupElementEdit) {
+        closePopup(popupElementEdit);
+    }
+})
 
 function handleProfileFormSubmit (evt) {
     evt.preventDefault();
@@ -55,6 +84,13 @@ popupCloseElementAdd.addEventListener('click', function() {
     closePopup(popupElementAdd);
 });
 
+//обработчик закрытия popup для добавления фото кликом на оверлей
+popupElementAdd.addEventListener('click', (evt) => {
+    if (evt.target === popupElementAdd) {
+        closePopup(popupElementAdd);
+    }
+});
+
 const handleCardFormSubmit = (evt) => {
     evt.preventDefault();
     const сard = {name: titleInput.value, link: linkInput.value};
@@ -77,6 +113,13 @@ const popupTitle = popupElementPhoto.querySelector('.popup__title');
 popupCloseElementPhoto.addEventListener('click', () => {
     closePopup(popupElementPhoto);
 })
+
+//обработчик закрытия popup для просмотра фото кликом на оверлей
+popupElementPhoto.addEventListener('click', (evt) => {
+    if (evt.target === popupElementPhoto) {
+        closePopup(popupElementPhoto);
+    }
+});
 
 const initialCards = [
     {
