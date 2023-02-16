@@ -10,17 +10,20 @@ const jobInput = formElementEdit.querySelector('.popup__element_field_job');
 //открытие popup
 const openPopup = function(popupElement) {
     popupElement.classList.add('popup_opened');
+    document.addEventListener('keydown', closeByEscape);
 }
 
 //закрытие popup
 const closePopup = function(popupElement) {
     popupElement.classList.remove('popup_opened');
+    document.removeEventListener('keydown', closeByEscape);
 }
 
-//закрыть popup нажатием клавиши est
-function keyHandlerEst(evt, popupElement) {
-    if (evt.keyCode === 27) {
-        closePopup(popupElement);
+//закрыть popup нажатием клавиши escape
+function closeByEscape(evt) {
+    if (evt.key === 'Escape') {
+        const openedPopup = document.querySelector('.popup_opened');
+        closePopup(openedPopup);
     }
 }
 
@@ -33,21 +36,6 @@ popupOpenElementEdit.addEventListener('click', function() {
 
 popupCloseElementEdit.addEventListener('click', function() {
     closePopup(popupElementEdit);
-});
-
-//обработчик закрытия popup для редактирования аккаунта клавишей est
-document.addEventListener('keydown', (evt) => {
-    keyHandlerEst(evt, popupElementEdit);
-});
-
-//обработчик закрытия popup для добавления фото клавишей est
-document.addEventListener('keydown', (evt) => {
-    keyHandlerEst(evt, popupElementAdd);
-});
-
-//обработчик закрытия popup для просмотра фото клавишей est
-document.addEventListener('keydown', (evt) => {
-    keyHandlerEst(evt, popupElementPhoto);
 });
 
 //обработчик закрытия popup для редактирования аккаунта кликом на оверлей
@@ -95,8 +83,7 @@ const handleCardFormSubmit = (evt) => {
     evt.preventDefault();
     const сard = {name: titleInput.value, link: linkInput.value};
     renderCard(сard);
-    titleInput.value = '';
-    linkInput.value = '';
+    evt.target.reset();
     closePopup(popupElementAdd);
 };
 
@@ -188,7 +175,6 @@ const createCard = (card) => {
   //поставить лайк
   cardLike.addEventListener('click', () => {
     cardLike.classList.toggle('element__like_active');
-    cardLike.classList.toggle('element__like');
   });
 
   return cardPicture;

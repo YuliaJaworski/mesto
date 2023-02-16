@@ -8,3 +8,7 @@
     padding-right: 5px;
     cursor: pointer;
 }
+
+.element__like_active:hover {
+    opacity: 100%;
+  }

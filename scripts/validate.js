@@ -23,6 +23,12 @@ const validationConfig = {
             toggleButtonState (form, config);
         })
         toggleButtonState (form, config);
+
+        form.addEventListener('reset', () => {
+            setTimeout(() => {
+                toggleButtonState (form, config);
+              }, 0);
+        });
     });
   }
 
