@@ -1,0 +1,1 @@
+export const popupElementPhoto = document.querySelector('.popup_open-photo');

@@ -1,6 +1,7 @@
 import Card from './Card.js';
 import {openPopup, closePopup, closeByEscape} from './Popup.js';
 import FormValidator from './FormValidator.js';
+import {popupElementPhoto} from './utils.js';
 
 const popupElementEdit = document.querySelector('.popup_edit');
 const popupCloseElementEdit = popupElementEdit.querySelector('.popup__close_button_edit');
@@ -66,10 +67,7 @@ popupElementAdd.addEventListener('click', (evt) => {
 const handleCardFormSubmit = (evt) => {
     evt.preventDefault();
     const card = {name: titleInput.value, link: linkInput.value};
-    const newCard = new Card(card.name, card.link);
-    const newCardElement = newCard.generateCard();
-    cardsContainer.prepend(newCardElement);
-    //renderCard(card);
+    renderCard(card);
     evt.target.reset();
     closePopup(popupElementAdd);
 };
@@ -78,7 +76,6 @@ formElementAdd.addEventListener('submit', handleCardFormSubmit);
 
 //переменные для просмотра фото
 
-const popupElementPhoto = document.querySelector('.popup_open-photo');
 const popupCloseElementPhoto = popupElementPhoto.querySelector('.popup__close_button_photo');
 
 //закрытие popup для просмотра фото
@@ -126,11 +123,25 @@ const cardsContainer = document.querySelector('.elements__grid');
 const cardContent = cardTemplate.content.querySelector('.element');
 
 //отображение карточек
+//initialCards.forEach((item) => {
+//  const card = new Card(item.name, item.link);
+//  const cardElement = card.generateCard();
+//  cardsContainer.prepend(cardElement);
+//});
+
+const createCard = (item) => {
+    const card = new Card(item.name, item.link);
+    return card.generateCard();
+}
+
+const renderCard = (item) => {
+    const card = createCard(item);
+    cardsContainer.prepend(card);
+}
+
 initialCards.forEach((item) => {
-  const card = new Card(item.name, item.link);
-  const cardElement = card.generateCard();
-  cardsContainer.prepend(cardElement);
-});
+    renderCard(item);
+})
 
 const validationConfig = {
     formSelector: '.popup__form',

@@ -33,7 +33,19 @@ export default class FormValidator {
     }
     
     //функция искать все инпуты в форме 
-    _addInputListener() {
+    _addInputListeners() {
+        this._form.addEventListener('submit', this._disableSubmit);
+
+        this._form.addEventListener('input', () => {
+            this._toggleButtonState ();
+        });
+
+        this._form.addEventListener('reset', () => {
+            setTimeout(() => {
+                this._toggleButtonState ();
+              }, 0);
+        });
+
         const inputList = Array.from(this._form.querySelectorAll(this._config.inputSelector));
         inputList.forEach((item) => {
             item.addEventListener('input', (event) => { //обработчик инпута
@@ -44,22 +56,8 @@ export default class FormValidator {
 
     //активация валидации на форме 
     enableValidation() {
-        
-        this._form.addEventListener('submit', this._disableSubmit);
-
-        this._addInputListener();
-
-        this._form.addEventListener('input', () => {
-            this._toggleButtonState ();
-        });
+        this._addInputListeners();
 
         this._toggleButtonState ();
-
-        this._form.addEventListener('reset', () => {
-            setTimeout(() => {
-                this._toggleButtonState ();
-              }, 0);
-        });
-
     }
 }
