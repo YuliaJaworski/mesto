@@ -1,10 +1,12 @@
-import Card from './Card.js';
-import Popup from './Popup.js';
-import FormValidator from './FormValidator.js';
-import Section from './Section.js';
-import PopupWithForm from './PopupWithForm.js';
-import UserInfo from './UserInfo.js';
-import PopupWithImage from './PopupWithImage.js';
+import Card from '../components/Card.js';
+import Popup from '../components/Popup.js';
+import FormValidator from '../components/FormValidator.js';
+import Section from '../components/Section.js';
+import PopupWithForm from '../components/PopupWithForm.js';
+import UserInfo from '../components/UserInfo.js';
+import PopupWithImage from '../components/PopupWithImage.js';
+
+import '../pages/index.css';
 
 const popupElementEdit = document.querySelector('.popup_edit');
 const popupCloseElementEdit = popupElementEdit.querySelector('.popup__close_button_edit');
