@@ -2,6 +2,8 @@ export default class FormValidator {
     constructor(config, form) {
         this._config = config;
         this._form = form;
+        this._buttonElement = this._form.querySelector(this._config.submitButtonSelector);
+        this._inputList = Array.from(this._form.querySelectorAll(this._config.inputSelector));
     }
     
     //функция предотвращение обновления
@@ -26,10 +28,9 @@ export default class FormValidator {
 
     //функция активности кнопки 
     _toggleButtonState () {
-        const buttonElement = this._form.querySelector(this._config.submitButtonSelector);
         const formValid = this._form.checkValidity();
-        buttonElement.disabled = !formValid;
-        buttonElement.classList.toggle(this._config.inactiveButtonClass, !formValid);
+        this._buttonElement.disabled = !formValid;
+        this._buttonElement.classList.toggle(this._config.inactiveButtonClass, !formValid);
     }
     
     //функция искать все инпуты в форме 
@@ -46,8 +47,7 @@ export default class FormValidator {
               }, 0);
         });
 
-        const inputList = Array.from(this._form.querySelectorAll(this._config.inputSelector));
-        inputList.forEach((item) => {
+        this._inputList.forEach((item) => {
             item.addEventListener('input', (event) => { //обработчик инпута
                 this._handleFormInput(event);
             });
