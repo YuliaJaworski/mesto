@@ -6,8 +6,6 @@ export const profileJob = document.querySelector('.profile__job');
 export const popupElementAdd = document.querySelector('.popup_add');
 export const popupOpenElementAdd = document.querySelector('.profile__add-button');
 export const formElementAdd = popupElementAdd.querySelector('.popup__form_add');
-export const titleInput = formElementAdd.querySelector('.popup__element_field_title');
-export const linkInput = formElementAdd.querySelector('.popup__element_field_link');
 
 export const initialCards = [
     {

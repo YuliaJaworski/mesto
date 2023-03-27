@@ -9,8 +9,6 @@ import {
   profileName,
   profileJob,
   popupOpenElementAdd,
-  titleInput,
-  linkInput,
   initialCards,
   cardTemplate,
   cardsContainer,
@@ -43,8 +41,8 @@ popupWithFormEdit.setEventListeners();
 //создание попапа для добавления фото
 const popupWithFormAdd = new PopupWithForm({
   popupSelector: '.popup_add', 
-  handleFormSubmit: () => {
-      const card = {name: titleInput.value, link: linkInput.value};
+  handleFormSubmit: (data) => {
+      const card = {name: data.title, link: data.link};
       renderCard(card);
   }
 });
@@ -55,14 +53,14 @@ popupOpenElementAdd.addEventListener('click', function() {
 });
 popupWithFormAdd.setEventListeners();
 
+const popupTypePhoto = new PopupWithImage('.popup_open-photo');
+popupTypePhoto.setEventListeners();
 //рендер карточек
 const renderCard = (item) => {
     const card = new Card({
         data:item,
         handleCardClick: (event) => {
-            const popupTypePhoto = new PopupWithImage('.popup_open-photo');
             popupTypePhoto.open(event);
-            popupTypePhoto.setEventListeners();
         }
     }, cardTemplate);
     const cardElement = card.generateCard();
