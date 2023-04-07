@@ -7,33 +7,6 @@ export const popupElementAdd = document.querySelector('.popup_add');
 export const popupOpenElementAdd = document.querySelector('.profile__add-button');
 export const formElementAdd = popupElementAdd.querySelector('.popup__form_add');
 
-export const initialCards = [
-    {
-      name: 'Архыз',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-    },
-    {
-      name: 'Челябинская область',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-    },
-    {
-      name: 'Иваново',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-    },
-    {
-      name: 'Камчатка',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-    },
-    {
-      name: 'Холмогорский район',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-    },
-    {
-      name: 'Байкал',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-    }
-  ];
-
 //переменные для создания массива
 export const cardTemplate = document.querySelector('#element__template');
 export const cardsContainer = document.querySelector('.elements__grid');
@@ -49,6 +22,7 @@ export const validationConfig = {
 
 export const popupFormEdit = document.querySelector('#popup__form_edit');
 export const popupFormAdd = document.querySelector('#popup__form_add');
+export const popupFormAvatar = document.querySelector('#popup__form_add-avatar');
 
 export const userAvatar = document.querySelector('.profile__avatar');
 export const popupNewAvatar = document.querySelector('.profile__avatar');

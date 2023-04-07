@@ -10,14 +10,13 @@ import {
   profileName,
   profileJob,
   popupOpenElementAdd,
-  initialCards,
   cardTemplate,
   cardsContainer,
   validationConfig,
   popupFormEdit,
   popupFormAdd,
   userAvatar,
-  //popupNewAvatar
+  popupFormAvatar
 } from '../utils/constants.js';
 import Api from '../components/Api.js';
 
@@ -174,6 +173,8 @@ apiUserInfo.then((data) => {
 //валидация формы
   const validateFormEdit = new FormValidator(validationConfig, popupFormEdit);
   const validateFormAdd = new FormValidator(validationConfig, popupFormAdd);
+  const validateFormAvatar = new FormValidator(validationConfig, popupFormAvatar);
 
   validateFormEdit.enableValidation();
   validateFormAdd.enableValidation();
+  validateFormAvatar.enableValidation();
