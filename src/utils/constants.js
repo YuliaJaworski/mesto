@@ -49,3 +49,5 @@ export const validationConfig = {
 
 export const popupFormEdit = document.querySelector('#popup__form_edit');
 export const popupFormAdd = document.querySelector('#popup__form_add');
+
+export const userAvatar = document.querySelector('.profile__avatar');
