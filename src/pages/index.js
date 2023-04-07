@@ -16,7 +16,8 @@ import {
   validationConfig,
   popupFormEdit,
   popupFormAdd,
-  userAvatar
+  userAvatar,
+  //popupNewAvatar
 } from '../utils/constants.js';
 import Api from '../components/Api.js';
 
@@ -30,18 +31,46 @@ const api = new Api({
   }
 })
 
+//создание попап для обновления аватара
+const popupWithFormAvatar = new PopupWithForm({
+  popupSelector: '.popup_add-avatar',
+  handleFormSubmit: (data) => {
+    //обновить данные о смене аватара
+    const apiNewAvatar = api.addNewUserPhoto(data);
+    apiNewAvatar.then((data) => {
+      userInfo.saveUserAvatar(data);
+    }).catch(err => console.log(err))
+    .finally(() => {
+      popupWithFormAvatar.rendederLoading(false);
+    })
+  }
+});
+popupWithFormAvatar.setEventListeners();
+
+const popupNewAvatar = document.querySelector('.profile__overlay');
+popupNewAvatar.addEventListener('click', () => {
+  popupWithFormAvatar.open();
+})
+
+
 //создание попапа для редактирования профиля
 const popupWithFormEdit = new PopupWithForm({
   popupSelector: '.popup_edit', 
   handleFormSubmit: (data) => {
-      userInfo.saveUserInfo(data);
+      //обновить данные о пользователе
+      const apiNewUserInfo = api.addNewUserName(data.name, data.job)
+      apiNewUserInfo.then((data) => {
+        userInfo.saveUserInfo(data)
+      }).catch((err) => console.log(err))
+      .finally(() => {
+        popupWithFormEdit.rendederLoading(false);
+      });
   }
 });
 const userInfo = new UserInfo({
-    name: profileName,
+    name: profileName, 
     job: profileJob,
-    api: api,
-    userPhoto: userAvatar
+    userPhoto: userAvatar,
 });
 
 // открытие popup редактирование профиля
@@ -58,6 +87,7 @@ popupWithSubmit.setEventListeners();
 const popupTypePhoto = new PopupWithImage('.popup_open-photo');
 popupTypePhoto.setEventListeners();
 
+const myId = 'e4c86b98099ee864ea74cf65';
 
 //загрузить карточки с сервера
 const cardsApi = api.getAllCards();
@@ -67,7 +97,9 @@ cardsApi.then((data) => {
   //рендер карточек
   const renderCard = (item) => {
     const card = new Card({
-        data:item,
+        data: item,
+        ownerId: item.owner,
+        userId: myId,
         handleCardClick: (event) => {
             popupTypePhoto.open(event);
         },
@@ -81,14 +113,31 @@ cardsApi.then((data) => {
               })
               .catch(err => console.log(err))
           })
-        }
+        },
+        handleLikeClick: () => {
+          if (card.isLiked()) {
+            api.deleteLike(card.getId())
+            .then((data) => {
+              card.likes = data.likes;
+              card.removeLikeButton();
+            })
+            .catch(err => console.log(err))
+          } else {
+            api.like(card.getId())
+            .then((data) => {
+              card.likes = data.likes;
+              card.handleLikeButton();
+            })
+            .catch(err => console.log(err))
+          }
+        },
     }, cardTemplate);
     const cardElement = card.generateCard();
     section.addItem(cardElement);
   }
 
   const section = new Section({
-    items: data.map((item) => ({name: item.name, link: item.link, id: item._id})),
+    items: data.map((item) => ({name: item.name, link: item.link, id: item._id, owner: item.owner._id, likes: item.likes})),
     renderer: renderCard}, cardsContainer);
 
   section.renderItems();
@@ -99,10 +148,13 @@ cardsApi.then((data) => {
     handleFormSubmit: (item) => {
       api.addNewCard(item.title, item.link)
         .then((data) => {
-          const card = {name: data.name, link: data.link, id: data._id};
+          const card = {name: data.name, link: data.link, id: data._id, owner: data.owner._id, likes: data.likes};
           renderCard(card);
         })
         .catch((err) => console.log(err))
+        .finally(() => {
+          popupWithFormAdd.rendederLoading(false);
+        })
     }
   });
 
@@ -114,7 +166,10 @@ cardsApi.then((data) => {
 });
 
 //загрузить информацию о пользователе с сервера
-userInfo.uploadUserData();
+const apiUserInfo = api.getUserName();
+apiUserInfo.then((data) => {
+  userInfo.uploadUserData(data);
+}).catch(err => console.log(err));
 
 //валидация формы
   const validateFormEdit = new FormValidator(validationConfig, popupFormEdit);

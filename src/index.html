@@ -40,7 +40,10 @@
           <img class="element__photo" src="./images/Alps.jpg" alt="фото в профиле">
           <div class="element__description">
             <h2 class="element__name"></h2>
-            <button type="button" class="element__like"></button>
+            <div class="element__likes">
+              <button type="button" class="element__like"></button>
+              <a class="element__count-likes">0</a>
+            </div>
           </div>
         </li>
       </template>
@@ -84,7 +87,7 @@
           <form name="popup__form" action="URL" method="post" id="popup__form_add-avatar" class="popup__form popup__form_add-avatar" novalidate>
             <input id="input-avatar" type="url" class="popup__element popup__element_field_avatar" name="avatar" value="" placeholder="Ссылка на аватар" required>
             <span id="input-avatar-error" class="popup__span"></span>
-            <button type="submit" class="popup__save">Сохранить</button>
+            <button type="submit" class="popup__save popup__save_field_avatar">Сохранить</button>
           </form>
         </div>
       </section>
