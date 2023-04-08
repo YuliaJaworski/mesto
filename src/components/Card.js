@@ -30,6 +30,10 @@ export default class Card {
       return this._countLikes.textContent = Number(this._likes.length);
     }
 
+    getLikesInfo(data) {
+      this._element.likes = data.likes;
+    }
+
     isLiked() {
       return this._likeButton.classList.contains('element__like_active');
     }

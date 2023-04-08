@@ -1,10 +1,12 @@
 export default class UserInfo {
-    constructor({name, job, userPhoto}) {
-        this._name = name;
-        this._job = job;
+    constructor({data, userPhoto}) {
+        this._name = data.name;
+        this._job = data.job;
         this._userPhoto = userPhoto;
     }
 
+
+    
     //загрузка данных о пользователе
     uploadUserData(data) {
         this._name.textContent = data.name;
@@ -16,13 +18,11 @@ export default class UserInfo {
     saveUserInfo(data) {
         this._name.textContent = data.name;
         this._job.textContent = data.about;
-        return data;
     }
 
     //загрузка нового аватара пользователя
     saveUserAvatar(data) {
         this._userInfo.src = data.link;
-        return data;
     }
 
     getAvatar() {

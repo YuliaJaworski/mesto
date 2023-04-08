@@ -4,18 +4,20 @@ export default class Api {
         this._headers = config.headers;
     }
 
+    _getResponseData(res) {
+        if (res.ok) {
+            return res.json();
+        }
+
+        return Promise.reject(`Ошибка: ${res.status}`);
+    }
+
     //загрузка карточек с сервера
     getAllCards() {
         return fetch(`${this._url}/cards`, {
             method: 'GET',
             headers: this._headers,
-        }).then((res) => {
-            if (res.ok) {
-                return res.json();
-            }
-
-            return Promise.reject("Произошла ошибка");
-        })
+        }).then((res) => this._getResponseData(res))
     }
 
     //добавить новую карточку
@@ -27,13 +29,7 @@ export default class Api {
                 name,
                 link,
             })
-        }).then((res) => {
-            if (res.ok) {
-                return res.json();
-            }
-
-            return Promise.reject("Произошла ошибка");
-        })
+        }).then((res) => this._getResponseData(res))
     }
 
     //загрузка информации о пользователе с сервера
@@ -41,13 +37,7 @@ export default class Api {
         return fetch(`${this._url}/users/me`, {
             method: 'GET',
             headers: this._headers,
-        }).then((res) => {
-            if (res.ok) {
-                return res.json();
-            }
-
-            return Promise.reject("Произошла ошибка");
-        }) 
+        }).then((res) => this._getResponseData(res)) 
     }
 
     //редактирование профиля
@@ -59,13 +49,7 @@ export default class Api {
                 name,
                 about,
               }),
-        }).then((res) => {
-            if (res.ok) {
-                return res.json();
-            }
-
-            return Promise.reject("Произошла ошибка");
-        }) 
+        }).then((res) => this._getResponseData(res)) 
     }
 
     //поставить лайк
@@ -73,13 +57,7 @@ export default class Api {
         return fetch(`${this._url}/cards/${id}/likes`, {
             method: 'PUT',
             headers: this._headers,
-        }).then((res) => {
-            if (res.ok) {
-                return res.json();
-            }
-
-            return Promise.reject("Произошла ошибка");
-        }) 
+        }).then((res) => this._getResponseData(res)) 
     }
 
     //удалить лайк
@@ -87,13 +65,7 @@ export default class Api {
         return fetch(`${this._url}/cards/${id}/likes`, {
             method: 'DELETE',
             headers: this._headers,
-        }).then((res) => {
-            if (res.ok) {
-                return res.json();
-            }
-
-            return Promise.reject("Произошла ошибка");
-        }) 
+        }).then((res) => this._getResponseData(res)) 
     }
 
     //удалить карточку
@@ -101,13 +73,7 @@ export default class Api {
         return fetch(`${this._url}/cards/${id}`, {
             method: 'DELETE',
             headers: this._headers,
-        }).then((res) => {
-            if (res.ok) {
-                return res.json();
-            }
-
-            return Promise.reject("Произошла ошибка");
-        })
+        }).then((res) => this._getResponseData(res))
     }
 
     //обновить аватар профиля
@@ -116,12 +82,6 @@ export default class Api {
             method: 'PATCH',
             headers: this._headers,
             body: JSON.stringify(data)
-        }).then((res) => {
-            if (res.ok) {
-                return res.json();
-            }
-
-            return Promise.reject("Произошла ошибка");
-        })
+        }).then((res) => this._getResponseData(res))
     }
 }

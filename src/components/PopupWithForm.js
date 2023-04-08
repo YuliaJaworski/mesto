@@ -28,10 +28,8 @@ export default class PopupWithForm extends Popup {
     rendederLoading(isLoading) {
         if (isLoading) {
             this._submitButton.textContent = 'Сохранение...';
-            this._popup.classList.add('popup_opened');
         } else {
             this._submitButton.textContent = this._submitButton.textContent;
-            this._popup.classList.remove('popup_opened');
         }
     }
 
@@ -42,7 +40,6 @@ export default class PopupWithForm extends Popup {
             evt.preventDefault();
             this.rendederLoading(true);
             this._handleFormSubmit(this._getInputValues());
-            this.close();
         });
     }
 

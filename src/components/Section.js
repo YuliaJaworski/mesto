@@ -1,13 +1,19 @@
 export default class Section {
-    constructor({items, renderer}, containerSelector) { //массив данных, функция отрисовки данных, контейнер, в который нужно добавлять элементы
-        this._renderedItems = items;
+    constructor({renderer}, containerSelector) { //функция отрисовки данных, контейнер, в который нужно добавлять элементы
         this._renderer = renderer;
         this._containerSelector = containerSelector;
     }
 
     //отрисовка каждого отдельного элемента
-    renderItems() {
-        this._renderedItems.forEach((item) => {
+    renderItems(cardList) {
+        const newCardList = cardList.map((item) => {
+            return { name: item.name, 
+                link: item.link, 
+                id: item._id, 
+                owner: item.owner._id, 
+                likes: item.likes }
+        });
+        newCardList.forEach((item) => {
             this._renderer(item);
       });
     }
