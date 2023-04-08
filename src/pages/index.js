@@ -71,9 +71,9 @@ const popupWithFormEdit = new PopupWithForm({
 const userInfo = new UserInfo({
   data: {
     name: profileName,
-    job: profileJob
+    job: profileJob,
   },
-  userPhoto: userAvatar,
+  userPhoto: userAvatar
 });
 
 // открытие popup редактирование профиля
@@ -90,14 +90,14 @@ popupWithSubmit.setEventListeners();
 const popupTypePhoto = new PopupWithImage('.popup_open-photo');
 popupTypePhoto.setEventListeners();
 
-const myId = 'e4c86b98099ee864ea74cf65';
+const userId = userInfo.getId();
 
 //рендер карточек
 const renderCard = (item) => {
   const card = new Card({
     data: item,
     ownerId: item.owner,
-    userId: myId,
+    userId: userId,
     handleCardClick: () => {
       popupTypePhoto.open(item);
     },
@@ -148,14 +148,17 @@ Promise.all([cardsApi, apiUserInfo])
 
     //загрузить карточки с сервера
     cardsApi.then((data) => {
+      console.log(data);
       section.renderItems(data);
     }).catch(err => console.log(err));
 
 
     //загрузить информацию о пользователе с сервера
     apiUserInfo.then((data) => {
-      userInfo.uploadUserData(data);
-    }).catch(err => console.log(err));
+      const initialInfo = { name: data.name, about: data.about, id: data._id, avatar: data.avatar };
+      userInfo.uploadUserData(initialInfo);
+    })
+    .catch(err => console.log(err));
 
   })
   .catch(err => console.log(err));

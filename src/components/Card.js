@@ -80,7 +80,7 @@ export default class Card {
       this._checkLikeStatus();
   
       this._cardPhoto.src = this._link;
-      this._element.querySelector('.element__name').textContent = this._name;
+      this._element.querySelector('.element__name').textContent = this._id;
       this._cardPhoto.alt = this._name;
   
       return this._element;
