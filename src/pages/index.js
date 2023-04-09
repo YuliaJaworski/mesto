@@ -90,14 +90,11 @@ popupWithSubmit.setEventListeners();
 const popupTypePhoto = new PopupWithImage('.popup_open-photo');
 popupTypePhoto.setEventListeners();
 
-const userId = userInfo.getId();
-
 //рендер карточек
 const renderCard = (item) => {
   const card = new Card({
     data: item,
     ownerId: item.owner,
-    userId: userId,
     handleCardClick: () => {
       popupTypePhoto.open(item);
     },
@@ -138,53 +135,41 @@ const section = new Section({
   renderer: renderCard
 }, cardsContainer);
 
-//загрузить данные о пользователе
-const apiUserInfo = api.getUserName();
-//загрузить карточки с сервера
-const cardsApi = api.getAllCards();
+Promise.all([api.getAllCards(), api.getUserName()])
+  .then(([initialCard, info]) => {
 
-Promise.all([cardsApi, apiUserInfo])
-  .then(() => {
-
+    const userId = info._id;
     //загрузить карточки с сервера
-    cardsApi.then((data) => {
-      console.log(data);
-      section.renderItems(data);
-    }).catch(err => console.log(err));
-
+    section.renderItems(initialCard, userId);
 
     //загрузить информацию о пользователе с сервера
-    apiUserInfo.then((data) => {
-      const initialInfo = { name: data.name, about: data.about, id: data._id, avatar: data.avatar };
-      userInfo.uploadUserData(initialInfo);
-    })
-    .catch(err => console.log(err));
+    userInfo.uploadUserData(info);
 
+    //создание попапа для добавления фото
+    const popupWithFormAdd = new PopupWithForm({
+      popupSelector: '.popup_add',
+      handleFormSubmit: (item) => {
+        api.addNewCard(item.title, item.link)
+          .then((data) => {
+            console.log(data);
+            const card = { name: data.name, link: data.link, id: data._id, owner: data.owner._id, likes: data.likes, userId: userId };
+            renderCard(card);
+            popupWithFormAdd.close();
+          })
+          .catch((err) => console.log(err))
+          .finally(() => {
+            popupWithFormAdd.rendederLoading(false);
+          })
+      }
+    });
+
+    //обработчик открытия попап для добавления фото
+    popupOpenElementAdd.addEventListener('click', function () {
+      popupWithFormAdd.open();
+    });
+    popupWithFormAdd.setEventListeners();
   })
   .catch(err => console.log(err));
-
-//создание попапа для добавления фото
-const popupWithFormAdd = new PopupWithForm({
-  popupSelector: '.popup_add',
-  handleFormSubmit: (item) => {
-    api.addNewCard(item.title, item.link)
-      .then((data) => {
-        const card = { name: data.name, link: data.link, id: data._id, owner: data.owner._id, likes: data.likes };
-        renderCard(card);
-        popupWithFormAdd.close();
-      })
-      .catch((err) => console.log(err))
-      .finally(() => {
-        popupWithFormAdd.rendederLoading(false);
-      })
-  }
-});
-
-//обработчик открытия попап для добавления фото
-popupOpenElementAdd.addEventListener('click', function () {
-  popupWithFormAdd.open();
-});
-popupWithFormAdd.setEventListeners();
 
 //валидация формы
 const validateFormEdit = new FormValidator(validationConfig, popupFormEdit);

@@ -5,14 +5,18 @@ export default class Section {
     }
 
     //отрисовка каждого отдельного элемента
-    renderItems(cardList) {
+    renderItems(cardList, userId) {
         const newCardList = cardList.map((item) => {
             return { name: item.name, 
                 link: item.link, 
                 id: item._id, 
                 owner: item.owner._id, 
-                likes: item.likes }
+                likes: item.likes,
+                userId: userId
+            }
         });
+
+        //передаем карточки с сервера в функцию renderCard
         newCardList.forEach((item) => {
             this._renderer(item);
       });

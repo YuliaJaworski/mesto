@@ -1,10 +1,10 @@
 export default class Card {
-    constructor ({data, userId, ownerId, handleCardClick, handleDeleteIcon, handleLikeClick}, templateSelector) {
+    constructor ({data, ownerId, handleCardClick, handleDeleteIcon, handleLikeClick}, templateSelector) {
         this._name = data.name;
         this._link = data.link;
         this._id = data.id;
         this._ownerId = ownerId;
-        this._userId = userId;
+        this._userId = data.userId;
         this._handleDeleteIcon = handleDeleteIcon;
         this._handleCardClick = handleCardClick;
         this._handleLikeClick = handleLikeClick;
@@ -80,7 +80,7 @@ export default class Card {
       this._checkLikeStatus();
   
       this._cardPhoto.src = this._link;
-      this._element.querySelector('.element__name').textContent = this._id;
+      this._element.querySelector('.element__name').textContent = this._name;
       this._cardPhoto.alt = this._name;
   
       return this._element;

@@ -3,19 +3,13 @@ export default class UserInfo {
         this._name = data.name;
         this._job = data.job;
         this._userPhoto = userPhoto;
-        this._id = data.id;
     }
 
     //загрузка данных о пользователе
     uploadUserData(item) {
-        this._id = item.id;
         this._name.textContent = item.name;
         this._job.textContent = item.about;
         this._userPhoto.src = item.avatar;
-    }
-
-    getId() {
-        return this._id;
     }
 
     //принимает новые данные пользователя
