@@ -14,7 +14,7 @@ export default class Section {
                 likes: item.likes,
                 userId: userId
             }
-        });
+        }).reverse();
 
         //передаем карточки с сервера в функцию renderCard
         newCardList.forEach((item) => {

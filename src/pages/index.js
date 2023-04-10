@@ -22,6 +22,8 @@ import Api from '../components/Api.js';
 
 import '../pages/index.css';
 
+let userId = '';
+
 const api = new Api({
   url: 'https://mesto.nomoreparties.co/v1/cohort-62',
   headers: {
@@ -138,38 +140,38 @@ const section = new Section({
 Promise.all([api.getAllCards(), api.getUserName()])
   .then(([initialCard, info]) => {
 
-    const userId = info._id;
+    userId = info._id;
+    console.log(initialCard);
     //загрузить карточки с сервера
     section.renderItems(initialCard, userId);
 
     //загрузить информацию о пользователе с сервера
     userInfo.uploadUserData(info);
-
-    //создание попапа для добавления фото
-    const popupWithFormAdd = new PopupWithForm({
-      popupSelector: '.popup_add',
-      handleFormSubmit: (item) => {
-        api.addNewCard(item.title, item.link)
-          .then((data) => {
-            console.log(data);
-            const card = { name: data.name, link: data.link, id: data._id, owner: data.owner._id, likes: data.likes, userId: userId };
-            renderCard(card);
-            popupWithFormAdd.close();
-          })
-          .catch((err) => console.log(err))
-          .finally(() => {
-            popupWithFormAdd.rendederLoading(false);
-          })
-      }
-    });
-
-    //обработчик открытия попап для добавления фото
-    popupOpenElementAdd.addEventListener('click', function () {
-      popupWithFormAdd.open();
-    });
-    popupWithFormAdd.setEventListeners();
   })
   .catch(err => console.log(err));
+
+//создание попапа для добавления фото
+const popupWithFormAdd = new PopupWithForm({
+  popupSelector: '.popup_add',
+  handleFormSubmit: (item) => {
+    api.addNewCard(item.title, item.link)
+      .then((data) => {
+        const card = { name: data.name, link: data.link, id: data._id, owner: data.owner._id, likes: data.likes, userId: userId };
+        renderCard(card);
+        popupWithFormAdd.close();
+      })
+      .catch((err) => console.log(err))
+      .finally(() => {
+        popupWithFormAdd.rendederLoading(false);
+      })
+  }
+});
+
+//обработчик открытия попап для добавления фото
+popupOpenElementAdd.addEventListener('click', function () {
+  popupWithFormAdd.open();
+});
+popupWithFormAdd.setEventListeners();
 
 //валидация формы
 const validateFormEdit = new FormValidator(validationConfig, popupFormEdit);
