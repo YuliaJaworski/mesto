@@ -141,7 +141,6 @@ Promise.all([api.getAllCards(), api.getUserName()])
   .then(([initialCard, info]) => {
 
     userId = info._id;
-    console.log(initialCard);
     //загрузить карточки с сервера
     section.renderItems(initialCard, userId);
 
